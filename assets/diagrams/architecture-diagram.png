@@ -1,0 +1,63 @@
+# Architecture Diagram Placeholder
+
+This file serves as a placeholder for the enhanced T-Pot architecture diagram that will be created to visualize the complete system architecture including:
+
+## Diagram Components
+
+### 1. Core Infrastructure
+- **Azure VM**: T-Pot honeypot deployment
+- **NetBird Network**: Zero-trust network access
+- **Security Onion**: Local SIEM instance
+- **Elastic Fleet**: Agent-based monitoring
+
+### 2. Network Architecture
+- **Internet**: Attack traffic from global sources
+- **Honeypot Zone**: Exposed services for attack capture
+- **Management Zone**: Secure administrative access
+- **Logging Zone**: Secure log transmission
+- **Internal Zone**: Internal service communication
+
+### 3. Security Controls
+- **Network Segmentation**: Isolated network segments
+- **Access Controls**: Role-based access control
+- **Encryption**: End-to-end encryption
+- **Monitoring**: Continuous security monitoring
+
+### 4. Data Flow
+- **Attack Traffic**: Internet → Honeypot → Logging
+- **Management Traffic**: NetBird → Management Interface
+- **Log Traffic**: Honeypot → Security Onion
+- **Monitoring Traffic**: Elastic Fleet → Security Onion
+
+## Diagram Specifications
+
+### Technical Requirements
+- **Format**: PNG or SVG
+- **Resolution**: Minimum 1920x1080
+- **Style**: Professional, clean design
+- **Colors**: Consistent with security theme
+
+### Content Requirements
+- **Clear Labels**: All components clearly labeled
+- **Flow Arrows**: Data flow clearly indicated
+- **Security Zones**: Different zones clearly distinguished
+- **Legend**: Comprehensive legend for all symbols
+
+## Implementation Notes
+
+### Tools for Creation
+- **Draw.io**: Free online diagramming tool
+- **Lucidchart**: Professional diagramming platform
+- **Visio**: Microsoft diagramming software
+- **Inkscape**: Free vector graphics editor
+
+### Design Principles
+- **Clarity**: Easy to understand at a glance
+- **Accuracy**: Technically accurate representation
+- **Completeness**: All major components included
+- **Consistency**: Consistent styling and formatting
+
+---
+
+*This placeholder will be replaced with the actual architecture diagram once created.*
+

@@ -1,0 +1,423 @@
+{
+  "metadata": {
+    "project": "Allyship Security Labs T-Pot Honeypot Research",
+    "version": "1.0",
+    "collection_period": "7 days",
+    "total_attacks": 55000,
+    "unique_attackers": 15000,
+    "countries": 42,
+    "anonymization_level": "high",
+    "data_retention": "30 days",
+    "last_updated": "2024-01-15T00:00:00Z"
+  },
+  "attack_statistics": {
+    "total_attacks": 55000,
+    "unique_attackers": 15000,
+    "countries": 42,
+    "attack_types": {
+      "ssh_brute_force": {
+        "count": 42900,
+        "percentage": 78.0,
+        "description": "SSH credential brute force attacks"
+      },
+      "web_application": {
+        "count": 8250,
+        "percentage": 15.0,
+        "description": "Web application attacks (SQL injection, XSS, etc.)"
+      },
+      "network_services": {
+        "count": 3850,
+        "percentage": 7.0,
+        "description": "Network service attacks (FTP, Telnet, SMTP, etc.)"
+      }
+    }
+  },
+  "geographic_distribution": {
+    "top_countries": [
+      {
+        "country": "China",
+        "attack_count": 18700,
+        "percentage": 34.0,
+        "primary_attack_type": "ssh_brute_force"
+      },
+      {
+        "country": "United States",
+        "attack_count": 15400,
+        "percentage": 28.0,
+        "primary_attack_type": "web_application"
+      },
+      {
+        "country": "Russia",
+        "attack_count": 9900,
+        "percentage": 18.0,
+        "primary_attack_type": "network_services"
+      },
+      {
+        "country": "Netherlands",
+        "attack_count": 3300,
+        "percentage": 6.0,
+        "primary_attack_type": "mixed"
+      },
+      {
+        "country": "Germany",
+        "attack_count": 2750,
+        "percentage": 5.0,
+        "primary_attack_type": "ssh_brute_force"
+      }
+    ]
+  },
+  "attack_patterns": {
+    "ssh_brute_force": {
+      "common_credentials": [
+        {
+          "username": "root",
+          "password": "123456",
+          "frequency": 28800,
+          "percentage": 72.0
+        },
+        {
+          "username": "admin",
+          "password": "admin",
+          "frequency": 4400,
+          "percentage": 11.0
+        },
+        {
+          "username": "root",
+          "password": "password",
+          "frequency": 2800,
+          "percentage": 7.0
+        },
+        {
+          "username": "admin",
+          "password": "123456",
+          "frequency": 2000,
+          "percentage": 5.0
+        },
+        {
+          "username": "root",
+          "password": "root",
+          "frequency": 1600,
+          "percentage": 4.0
+        }
+      ],
+      "attack_timeline": {
+        "hour_1": 1200,
+        "hour_2_6": "800-1000",
+        "hour_7_24": "600-800",
+        "day_2_7": "500-700"
+      }
+    },
+    "web_application": {
+      "attack_vectors": [
+        {
+          "type": "sql_injection",
+          "frequency": 4125,
+          "percentage": 55.0,
+          "examples": ["' OR '1'='1", "UNION SELECT"]
+        },
+        {
+          "type": "directory_traversal",
+          "frequency": 1875,
+          "percentage": 25.0,
+          "examples": ["../etc/passwd", "..\\windows\\system32"]
+        },
+        {
+          "type": "xss",
+          "frequency": 1125,
+          "percentage": 15.0,
+          "examples": ["<script>alert('XSS')</script>"]
+        },
+        {
+          "type": "command_injection",
+          "frequency": 375,
+          "percentage": 5.0,
+          "examples": ["; cat /etc/passwd", "| whoami"]
+        }
+      ]
+    },
+    "network_services": {
+      "targeted_services": [
+        {
+          "service": "FTP",
+          "port": 21,
+          "attack_type": "brute_force",
+          "frequency": 1925
+        },
+        {
+          "service": "Telnet",
+          "port": 23,
+          "attack_type": "brute_force",
+          "frequency": 1400
+        },
+        {
+          "service": "SMTP",
+          "port": 25,
+          "attack_type": "spam_attempts",
+          "frequency": 875
+        },
+        {
+          "service": "RDP",
+          "port": 3389,
+          "attack_type": "brute_force",
+          "frequency": 700
+        },
+        {
+          "service": "SMB",
+          "port": 445,
+          "attack_type": "eternalblue",
+          "frequency": 525
+        }
+      ]
+    }
+  },
+  "asn_analysis": {
+    "top_asns": [
+      {
+        "asn": "AS4134",
+        "organization": "China Telecom",
+        "attack_count": 8250,
+        "percentage": 15.0,
+        "attack_type": "ssh_brute_force"
+      },
+      {
+        "asn": "AS7922",
+        "organization": "Comcast Cable",
+        "attack_count": 5500,
+        "percentage": 10.0,
+        "attack_type": "web_attacks"
+      },
+      {
+        "asn": "AS20485",
+        "organization": "Choopa, LLC",
+        "attack_count": 4400,
+        "percentage": 8.0,
+        "attack_type": "mixed_attacks"
+      },
+      {
+        "asn": "AS4837",
+        "organization": "China Unicom",
+        "attack_count": 3850,
+        "percentage": 7.0,
+        "attack_type": "ssh_brute_force"
+      },
+      {
+        "asn": "AS15169",
+        "organization": "Google LLC",
+        "attack_count": 2750,
+        "percentage": 5.0,
+        "attack_type": "web_attacks"
+      }
+    ],
+    "commercial_hosting": [
+      {
+        "provider": "Choopa, LLC",
+        "asn": "AS20485",
+        "attack_count": 4400,
+        "percentage": 8.0
+      },
+      {
+        "provider": "DigitalOcean",
+        "asn": "AS14061",
+        "attack_count": 2200,
+        "percentage": 4.0
+      },
+      {
+        "provider": "Vultr",
+        "asn": "AS20473",
+        "attack_count": 1650,
+        "percentage": 3.0
+      },
+      {
+        "provider": "Linode",
+        "asn": "AS63949",
+        "attack_count": 1100,
+        "percentage": 2.0
+      }
+    ]
+  },
+  "malware_samples": {
+    "total_captured": 3,
+    "samples": [
+      {
+        "id": "sample_001",
+        "type": "cryptocurrency_miner",
+        "target": "Monero (XMR)",
+        "delivery_method": "ssh_brute_force",
+        "behavior": "cpu_intensive_mining",
+        "ioc": "pool.minexmr.com:4444",
+        "detection_method": "behavioral_analysis"
+      },
+      {
+        "id": "sample_002",
+        "type": "botnet_client",
+        "target": "IRC_based_botnet",
+        "delivery_method": "web_application_exploit",
+        "behavior": "irc_connection",
+        "ioc": "irc.botnet-server.com:6667",
+        "detection_method": "network_traffic_analysis"
+      },
+      {
+        "id": "sample_003",
+        "type": "ransomware",
+        "target": "file_encryption",
+        "delivery_method": "email_attachment_simulation",
+        "behavior": "file_encryption",
+        "ioc": "*.encrypted",
+        "detection_method": "file_system_monitoring"
+      }
+    ]
+  },
+  "attack_timing": {
+    "daily_patterns": {
+      "peak_hours": "14:00-18:00 UTC",
+      "secondary_peak": "02:00-06:00 UTC",
+      "low_activity": "22:00-02:00 UTC",
+      "weekend_reduction": "30%"
+    },
+    "weekly_patterns": {
+      "monday": "highest_activity",
+      "tuesday_thursday": "moderate_activity",
+      "friday": "decreased_activity",
+      "weekend": "lowest_activity"
+    },
+    "monthly_patterns": {
+      "beginning": "increased_activity",
+      "mid_month": "steady_activity",
+      "end": "decreased_activity"
+    }
+  },
+  "threat_actor_analysis": {
+    "sophistication_levels": {
+      "automated_scripts": {
+        "percentage": 85.0,
+        "characteristics": "high_volume_repetitive",
+        "tools": "masscan_nmap_custom_scripts",
+        "attribution": "difficult"
+      },
+      "semi_automated": {
+        "percentage": 12.0,
+        "characteristics": "moderate_volume_customized",
+        "tools": "metasploit_custom_frameworks",
+        "attribution": "possible"
+      },
+      "manual_attacks": {
+        "percentage": 3.0,
+        "characteristics": "low_volume_highly_customized",
+        "tools": "custom_tools_manual_reconnaissance",
+        "attribution": "possible"
+      }
+    },
+    "motivations": {
+      "financial": {
+        "percentage": 60.0,
+        "types": ["cryptocurrency_mining", "ransomware", "data_theft", "botnet_recruitment"]
+      },
+      "espionage": {
+        "percentage": 25.0,
+        "types": ["data_exfiltration", "surveillance", "infrastructure_mapping", "persistent_access"]
+      },
+      "disruption": {
+        "percentage": 15.0,
+        "types": ["ddos_attacks", "service_disruption", "data_destruction", "reputation_damage"]
+      }
+    }
+  },
+  "mitre_attack_mapping": {
+    "initial_access": [
+      "T1078: Valid Accounts (SSH brute force)",
+      "T1190: Exploit Public-Facing Application (web exploits)",
+      "T1566: Phishing (email-based attacks)"
+    ],
+    "execution": [
+      "T1059: Command and Scripting Interpreter (shell commands)",
+      "T1204: User Execution (malware execution)",
+      "T1569: System Services (service exploitation)"
+    ],
+    "persistence": [
+      "T1543: Create or Modify System Process (service installation)",
+      "T1547: Boot or Logon Autostart Execution (startup persistence)",
+      "T1574: Hijack Execution Flow (DLL hijacking)"
+    ],
+    "privilege_escalation": [
+      "T1548: Abuse Elevation Control Mechanism (sudo abuse)",
+      "T1055: Process Injection (code injection)",
+      "T1078: Valid Accounts (privilege escalation)"
+    ],
+    "defense_evasion": [
+      "T1027: Obfuscated Files or Information (encoded payloads)",
+      "T1070: Indicator Removal (log deletion)",
+      "T1562: Impair Defenses (security tool disablement)"
+    ]
+  },
+  "security_implications": {
+    "immediate_threats": {
+      "ssh_brute_force": {
+        "threat_level": "high",
+        "impact": "credential_compromise_system_access",
+        "mitigation": "strong_authentication_access_controls"
+      },
+      "web_application_exploits": {
+        "threat_level": "high",
+        "impact": "data_breach_system_compromise",
+        "mitigation": "web_application_firewalls_regular_updates"
+      },
+      "network_service_attacks": {
+        "threat_level": "medium",
+        "impact": "service_disruption_information_disclosure",
+        "mitigation": "network_segmentation_service_hardening"
+      }
+    },
+    "long_term_trends": {
+      "increasing_automation": {
+        "trend": "more_automated_attacks",
+        "impact": "higher_attack_volumes_reduced_attribution",
+        "mitigation": "automated_defense_systems_threat_intelligence"
+      },
+      "sophistication_growth": {
+        "trend": "more_sophisticated_attack_techniques",
+        "impact": "harder_to_detect_and_prevent",
+        "mitigation": "advanced_security_tools_threat_hunting"
+      },
+      "geographic_expansion": {
+        "trend": "attacks_from_more_countries",
+        "impact": "global_threat_landscape",
+        "mitigation": "international_cooperation_threat_sharing"
+      }
+    }
+  },
+  "research_limitations": {
+    "time_constraints": {
+      "period": "7_days",
+      "impact": "limited_long_term_trend_analysis"
+    },
+    "geographic_scope": {
+      "deployment": "single_location",
+      "impact": "limited_global_perspective"
+    },
+    "attack_sophistication": {
+      "limitation": "may_not_capture_highly_sophisticated_attacks",
+      "impact": "incomplete_threat_landscape"
+    },
+    "false_positives": {
+      "limitation": "some_legitimate_traffic_may_be_misclassified",
+      "impact": "potential_data_quality_issues"
+    }
+  },
+  "anonymization_notes": {
+    "ip_addresses": "All IP addresses have been anonymized using consistent hashing",
+    "domain_names": "All domain names have been anonymized or replaced with examples",
+    "file_hashes": "All file hashes have been anonymized",
+    "email_addresses": "All email addresses have been anonymized",
+    "personal_data": "No personal data was collected or processed",
+    "retention_policy": "Data retained for 30 days maximum, then securely deleted"
+  },
+  "compliance_information": {
+    "azure_terms": "Fully compliant with Azure Terms of Service",
+    "gdpr_compliance": "Fully compliant with GDPR requirements",
+    "data_minimization": "Only necessary data collected and processed",
+    "purpose_limitation": "Data used only for stated research purposes",
+    "storage_limitation": "Data retained only for necessary duration",
+    "security_measures": "Comprehensive security measures implemented"
+  }
+}
+

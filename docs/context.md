@@ -10,10 +10,10 @@ This document provides comprehensive context for the Allyship Security Labs T-Po
 
 This project represents a strategic evolution in the Allyship Security Labs infrastructure, building upon the foundation established in the [Allyship Security Lab VPN - Cloud-Local SIEM](https://github.com/yourusername/allyship-securitylab-VpNSIEM) project. The progression demonstrates:
 
-1. **Infrastructure Maturity**: Evolution from basic SIEM setup to advanced threat intelligence collection
-2. **Security Posture Enhancement**: Implementation of zero-trust architecture principles
-3. **Operational Excellence**: Integration of multiple security tools and platforms
-4. **Research Capability**: Development of sophisticated threat research infrastructure
+1. **Infrastructure Maturity**: Evolution from basic SIEM setup to advanced threat intelligence collection with dual monitoring
+2. **Security Posture Enhancement**: Implementation of zero-trust architecture principles with comprehensive host monitoring
+3. **Operational Excellence**: Integration of multiple security tools and platforms with 4.8M+ events collected in 2 days
+4. **Research Capability**: Development of sophisticated threat research infrastructure with complete attack and host behavior visibility
 
 ### Strategic Objectives
 
@@ -28,12 +28,12 @@ This project represents a strategic evolution in the Allyship Security Labs infr
 
 The honeypot deployment creates a controlled attack surface designed to attract and analyze malicious activity while maintaining security boundaries:
 
-#### Primary Attack Vectors
-1. **SSH Brute Force Attacks**: Credential-based attacks targeting port 22
-2. **Web Application Attacks**: HTTP/HTTPS-based attacks targeting web services
-3. **Service Enumeration**: Port scanning and service discovery attempts
-4. **Malware Distribution**: Attempts to deliver malicious payloads
-5. **Network Protocol Attacks**: Attacks targeting various network services
+#### Primary Attack Vectors (Based on 2-Day Data)
+1. **SIP Attacks (Port 5060)**: 50,000+ attacks in single day - highest volume
+2. **SSH Brute Force Attacks**: Credential-based attacks targeting port 22
+3. **Web Application Attacks**: HTTP/HTTPS-based attacks targeting ports 80/443
+4. **Service Enumeration**: Port scanning and service discovery attempts
+5. **Malware Distribution**: Attempts to deliver malicious payloads
 
 #### Secondary Attack Vectors
 1. **Management Interface Attacks**: Attempts to compromise administrative access
@@ -156,7 +156,29 @@ The honeypot deployment creates a controlled attack surface designed to attract 
 #### Data Flow Architecture
 ```
 Internet Attackers → Azure VM (T-Pot) → Elastic Stack → NetBird Tunnel → Security Onion (Local)
+                                    ↓
+                            Elastic Fleet Agents → Host Monitoring (4.8M+ events) → NetBird Tunnel → Security Onion (Local)
 ```
+
+#### Dual Monitoring Architecture
+The project implements a **dual monitoring approach** that provides comprehensive security visibility:
+
+1. **External Attack Monitoring (T-Pot)**:
+   - **113,000+ attack attempts** captured in 2 days
+   - Multiple honeypot types: Cowrie (56k), Sentrypeer (55k), Dionaea, Honeytrap
+   - Real-time attack capture and geographic analysis
+
+2. **Internal Host Monitoring (Elastic Fleet)**:
+   - **4.8+ million host events** collected in 2 days
+   - Process monitoring: 1,754,395 events
+   - File system monitoring: 1,417,675 events
+   - Network monitoring: 875,328 events
+   - Session monitoring: 1,021 events
+
+3. **Centralized Analysis (Security Onion)**:
+   - Unified SIEM platform for both attack and host data
+   - Correlation analysis between external attacks and internal behavior
+   - Complete audit trail of all security events
 
 #### Log Processing Pipeline
 1. **Collection**: Honeypots capture attack data

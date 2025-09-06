@@ -19,17 +19,18 @@
 
 ## 🚀 Project Overview
 
-This research project deployed a **T-Pot honeypot on Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents** to capture and analyze real-world cyber attacks while maintaining a **zero-trust architecture**. The project successfully captured **55,000+ attack attempts** from **42+ countries** during a 7-day research period, providing valuable insights into current threat landscapes and attack patterns.
+This research project deployed a **T-Pot honeypot on Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents** to capture and analyze real-world cyber attacks while maintaining a **zero-trust architecture**. The project has captured **113,000+ attack attempts** in just 2 days, with projections indicating **400,000+ attacks** over the full 7-day research period. Additionally, **Elastic Fleet Agents** have collected **4.8+ million host monitoring events** from the T-Pot system, providing comprehensive visibility into both external attacks and internal system behavior through centralized Security Onion analysis.
 
 > **🔄 Project Evolution**: This research builds upon my [Allyship Security Lab VPN - Cloud-Local SIEM](https://github.com/yourusername/allyship-securitylab-VpNSIEM) infrastructure, demonstrating the evolution from basic SIEM setup to advanced threat intelligence collection with enhanced security controls.
 
 ### 🎯 Key Technologies
 - **T-Pot** - The All-In-One Multi Honeypot Platform
 - **Azure VM** - Cloud infrastructure hosting
-- **Elastic Stack** - Kibana dashboard, Elasticsearch for data storage
+- **Security Onion** - Local SIEM for centralized analysis
+- **Elastic Stack** - Kibana dashboard, Elasticsearch OSQuery for data storage and Host Queries
 - **Let's Encrypt** - SSL/TLS certificate management
-- **NetBird** - Zero-trust network access
-- **Elastic Fleet Agents** - Behavioral monitoring and log forwarding
+- **NetBird** - Zero-trust network access- Installed accross endpoints for NAT Passthrough, Secured Local/Cloud connections
+- **Elastic Fleet Agents** - Behavioral monitoring and log forwarding from all Local/Cloud endpoints to SIEM.
 
 ## 🏗️ Architecture Evolution
 
@@ -46,19 +47,22 @@ This project represents the **next evolution** of my Allyship Security Labs infr
 
 | Metric | Value | Description |
 |--------|-------|-------------|
-| 🎯 **Total Attacks** | 55,000+ | Captured from 42+ countries |
-| 🌍 **Countries** | 42+ | Global attack distribution |
+| 🎯 **Total Attacks (2 Days)** | 113,000+ | Actual captured attacks |
+| 🎯 **Projected (7 Days)** | 400,000+ | Estimated total attacks |
+| 📊 **Host Events (2 Days)** | 4.8M+ | Elastic Fleet monitoring events |
+| 🌍 **Top Countries** | Romania, US, Netherlands | Leading attack sources |
 | 🔐 **Zero-Trust** | ✅ | NetBird-managed access |
-| 📊 **Monitoring** | ✅ | Elastic Fleet integration |
+| 📊 **Dual Monitoring** | ✅ | Attack + Host behavior analysis |
 | 🛡️ **Compliance** | ✅ | Azure & GDPR compliant |
 
 </div>
 
 ### 🚀 Key Achievements
-- **🎯 Captured 55,000+ attack attempts** from 42+ countries using a securely isolated honeypot
-- **🔐 Implemented zero-trust access model** using NetBird for secure management (replacing direct SSH)
-- **📊 Integrated Elastic Fleet Agents** to monitor host behavior and securely forward logs to local Security Onion
-- **🔍 Analyzed attack patterns** including SSH brute-forcing (78% of attacks), malware downloads, and port scanning
+- **🎯 Captured 113,000+ attack attempts in 2 days** using a securely isolated honeypot
+- **📊 Collected 4.8+ million host monitoring events** through Elastic Fleet Agents for comprehensive system visibility
+- **🔐 Implemented zero-trust access model** with NetBird-managed WireGuard tunnels (replacing direct SSH access)
+- **🔄 Dual monitoring architecture** combining external attack capture (T-Pot) with internal host behavior analysis (Elastic Fleet)
+- **🔍 Analyzed attack patterns** including SIP attacks (port 5060), SSH brute-forcing (port 22), and web attacks (ports 80/443)
 - **✅ Ensured compliance** with Azure terms of service and GDPR requirements for research data
 
 ## 🏛️ Technical Architecture
@@ -69,38 +73,39 @@ The enhanced T-Pot deployment features a multi-layered security architecture tha
 
 ### 🔄 Architecture Flow
 1. **🌐 Attackers** → Target Azure VM (T-Pot honeypots)
-2. **🕸️ T-Pot** → Captures and logs all attack attempts
-3. **🔐 NetBird** → Provides secure management access via WireGuard tunnels
-4. **📊 Elastic Fleet** → Monitors host behavior and forwards logs
-5. **🛡️ Security Onion** → Receives and analyzes logs from local instance
+2. **🕸️ T-Pot** → Captures and logs all attack attempts (113,000+ in 2 days)
+3. **📊 Elastic Fleet Agents** → Monitor host behavior on T-Pot system (4.8M+ events in 2 days)
+4. **🔐 NetBird** → Secure WireGuard tunnels (100.66.x.x/16) for zero-trust data forwarding
+5. **🛡️ Security Onion** → Centralized SIEM processing both attack data and host monitoring events
 
 ### 🧩 Key Components
-- **🕸️ Honeypots**: Cowrie (SSH), Dionaea (malware), Honeytrap (network services)
-- **📊 Elastic Stack**: Kibana dashboard, Elasticsearch for data storage
-- **🔐 NetBird Security Layer**: Zero-trust access control and network segmentation
-- **📈 Elastic Fleet Agents**: Behavioral monitoring and secure log forwarding
+- **🕸️ Honeypots**: Cowrie (56k attacks), Sentrypeer (55k attacks), Dionaea, Honeytrap
+- **📊 Elastic Fleet Agents**: Process monitoring (1.7M events), file monitoring (1.4M events), network monitoring (875k events)
+- **🔐 NetBird Security Layer**: Zero-trust access control and secure data forwarding
+- **🛡️ Security Onion**: Centralized SIEM for dual monitoring (attacks + host behavior)
 
-## 🔍 Key Findings
+## 🔍 Key Findings (Based on 2-Day Data)
 
-### 1. 🎯 SSH Brute-Forcing Dominates Attack Patterns
-SSH brute-forcing represented **78% of all captured attacks**, with over **1,000 attempts** recorded in the first hour of deployment. This finding highlights the persistent nature of credential-based attacks in the current threat landscape.
+### 1. 🎯 SIP Attacks Dominate (Port 5060)
+SIP attacks on port 5060 represented the **highest volume** with over **50,000 attacks** in a single day spike, indicating significant targeting of VoIP infrastructure.
 
-[![SSH Attack Patterns](assets/screenshots/ssh-attack-patterns.png)](assets/screenshots/ssh-attack-patterns.png)
+### 2. 🌍 Romania Leads Attack Sources
+**Romania** emerged as the **top attack source** with over **50,000 attacks** in a single day, followed by the **United States**, **Netherlands**, **China**, and **Hong Kong**.
 
-### 2. 🌍 Global Attack Distribution
-Top attacker countries included **China (34%)**, **United States (28%)**, and **Russia (18%)**, with attacker ASNs primarily showing commercial hosting providers. This distribution suggests the use of compromised infrastructure for attack campaigns.
+### 3. 🔑 Honeypot Distribution
+**Cowrie (SSH)** and **Sentrypeer** captured the majority of attacks with **56,000** and **55,000** respectively, while other honeypots like **H0neytr4p**, **Tanner**, and **Dionaea** captured hundreds of attacks each.
 
-[![Attack Map](assets/screenshots/attack-map.png)](assets/screenshots/attack-map.png)
+### 4. 🦠 Attack Volume Trends
+The deployment shows **massive attack spikes** with over **50,000 attacks** occurring in single-day bursts, demonstrating the high-volume nature of automated attacks.
 
-### 3. 🔑 Common Credential Patterns
-The most frequently attempted credentials were **'root' username with '123456' password (72% of SSH attempts)**, followed by **'admin'/'admin' combinations**. This data supports the importance of strong password policies and multi-factor authentication.
+### 5. 📊 Comprehensive Host Monitoring
+**Elastic Fleet Agents** collected **4.8+ million events** from the T-Pot host system, including:
+- **1,754,395 process events** - Complete process monitoring and execution tracking
+- **1,417,675 file events** - File system changes and access monitoring  
+- **875,328 network events** - Internal network traffic analysis
+- **1,021 session events** - User session and authentication tracking
 
-[![Credential Analysis](assets/screenshots/credential-analysis.png)](assets/screenshots/credential-analysis.png)
-
-### 4. 🦠 Malware Capture and Analysis
-Successfully captured **3 distinct malware binaries** through the Dionaea honeypot, with behavioral analysis from Elastic Fleet agents providing additional context on execution patterns and network communications.
-
-[![Malware Analysis](assets/screenshots/malware-analysis.png)](assets/screenshots/malware-analysis.png)
+This dual monitoring approach provides **complete visibility** into both external attack attempts and internal system behavior, enabling comprehensive threat analysis through the centralized Security Onion SIEM.
 
 ## 🔒 Security Enhancements
 
@@ -116,15 +121,16 @@ Replaced direct SSH access with NetBird-managed WireGuard tunnels, implementing 
 - ✅ Complete audit trail of all network connections
 
 ### 📊 Elastic Fleet Integration
-Deployed Elastic Fleet Agents to monitor host behavior and configured secure log forwarding to the local Security Onion instance. This integration provided behavioral analysis of honeypot interactions beyond traditional log analysis.
+Deployed Elastic Fleet Agents to monitor host behavior and configured secure log forwarding to the local Security Onion instance. This integration collected **4.8+ million events** in just 2 days, providing comprehensive behavioral analysis of the T-Pot system beyond traditional attack log analysis.
 
 [![Elastic Fleet Dashboard](assets/screenshots/elastic-fleet.png)](assets/screenshots/elastic-fleet.png)
 
 **Key Benefits:**
-- ✅ Real-time behavioral monitoring of honeypot interactions
-- ✅ Secure log forwarding to local SIEM infrastructure
-- ✅ Enhanced threat detection through behavioral analysis
-- ✅ Integration with existing Security Onion deployment
+- ✅ **4.8M+ events collected** in 2 days from T-Pot host monitoring
+- ✅ **Dual monitoring capability** - external attacks + internal host behavior
+- ✅ **Secure log forwarding** via NetBird WireGuard tunnels to local SIEM
+- ✅ **Comprehensive visibility** into process, file, network, and session events
+- ✅ **Centralized analysis** through Security Onion for complete threat picture
 
 ### 🛡️ Zero-Trust Architecture
 All devices connected via NetBird with proper access policies, ensuring no direct internet exposure for management interfaces and maintaining complete visibility into all network connections.

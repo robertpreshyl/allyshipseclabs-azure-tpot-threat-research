@@ -4,26 +4,59 @@ This document provides comprehensive analysis of the attacks captured during the
 
 ## Executive Summary
 
-During the 7-day research period, the T-Pot honeypot successfully captured **55,000+ attack attempts** from **42+ countries**, providing valuable insights into the current threat landscape. The analysis reveals significant patterns in attack methodologies, geographic distribution, and threat actor behavior.
+During the 2-day research period, the T-Pot honeypot successfully captured **113,000+ attack attempts** from multiple countries, with projections indicating **400,000+ attacks** over a full 7-day period. Additionally, **Elastic Fleet Agents** collected **4.8+ million host monitoring events**, providing comprehensive visibility into both external attacks and internal system behavior through centralized Security Onion analysis.
 
 ### Key Statistics
-- **Total Attacks**: 55,000+
-- **Unique Attackers**: 15,000+ unique IP addresses
-- **Countries**: 42+ countries represented
-- **Attack Types**: 15+ different attack vectors
-- **Malware Samples**: 3 distinct malware binaries captured
-- **Credential Attempts**: 40,000+ credential-based attacks
+- **Total Attacks (2 Days)**: 113,000+
+- **Projected Attacks (7 Days)**: 400,000+
+- **Host Monitoring Events**: 4.8+ million events
+- **Top Countries**: Romania, United States, Netherlands, China, Hong Kong
+- **Primary Attack Vector**: SIP attacks (port 5060) with 50,000+ in single day
+- **Honeypot Distribution**: Cowrie (56k), Sentrypeer (55k), others (hundreds each)
+
+## Dual Monitoring Architecture
+
+### Comprehensive Security Visibility
+
+This research project implements a **dual monitoring approach** that provides complete visibility into both external attack attempts and internal system behavior:
+
+#### External Attack Monitoring (T-Pot)
+- **113,000+ attack attempts** captured in 2 days
+- **Multiple honeypot types**: Cowrie, Sentrypeer, Dionaea, Honeytrap
+- **Real-time attack capture** and analysis
+- **Geographic and temporal analysis** of attack patterns
+
+#### Internal Host Monitoring (Elastic Fleet)
+- **4.8+ million host events** collected in 2 days
+- **Process monitoring**: 1,754,395 process events
+- **File system monitoring**: 1,417,675 file events  
+- **Network monitoring**: 875,328 network events
+- **Session monitoring**: 1,021 session events
+
+#### Centralized Analysis (Security Onion)
+- **Unified SIEM platform** for both attack and host data
+- **Correlation analysis** between external attacks and internal behavior
+- **Behavioral analysis** of system responses to attacks
+- **Complete audit trail** of all security events
+
+### Security Benefits of Dual Monitoring
+
+1. **Complete Threat Picture**: External attacks + internal system behavior
+2. **Attack Impact Assessment**: How attacks affect the target system
+3. **Behavioral Analysis**: System response patterns to different attack types
+4. **Forensic Capability**: Detailed logs for incident investigation
+5. **Proactive Detection**: Early warning of system compromise attempts
 
 ## Attack Pattern Analysis
 
-### 1. SSH Brute Force Attacks (78% of total attacks)
+### 1. SIP Attacks Dominate (Port 5060) - Highest Volume
 
 #### Attack Characteristics
-- **Primary Target**: Port 22 (SSH)
-- **Attack Method**: Automated credential brute-forcing
-- **Frequency**: 1,000+ attempts in first hour
-- **Persistence**: Continuous 24/7 attack attempts
-- **Geographic Distribution**: Global, with concentration in Asia
+- **Primary Target**: Port 5060 (SIP/VoIP)
+- **Attack Method**: Automated SIP scanning and exploitation
+- **Frequency**: 50,000+ attacks in single day spike
+- **Persistence**: Massive volume spikes with automated targeting
+- **Geographic Distribution**: Global, with Romania leading attack sources
 
 #### Common Credential Patterns
 | Username | Password | Frequency | Percentage |

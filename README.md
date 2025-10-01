@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://github.com/robertpreshyl/allyshipsec-tpot-azure-research/assets/logo/asl-allyship-security-lab-logo.png" alt="ASL Allyship Security Lab Logo" width="400" height="auto">
+<img src="assets/screenshots/asl-logo-full2.png" alt="ASL Allyship Security Lab Logo" width="400" height="auto">
 
 # 🛡️ Allyship Security Labs: Advanced T-Pot Honeypot with Zero-Trust Architecture
 
@@ -19,7 +19,7 @@
 
 ## 🚀 Project Overview
 
-This research project deployed a **T-Pot honeypot on Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents** to capture and analyze real-world cyber attacks while maintaining a **zero-trust architecture**. The project has captured **113,000+ attack attempts** in just 2 days, with projections indicating **400,000+ attacks** over the full 7-day research period. Additionally, **Elastic Fleet Agents** have collected **4.8+ million host monitoring events** from the T-Pot system, providing comprehensive visibility into both external attacks and internal system behavior through centralized Security Onion analysis.
+This research project deployed a **T-Pot honeypot on Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents** to capture and analyze real-world cyber attacks while maintaining a **zero-trust architecture**. Over the final 7‑day run, the deployment captured **451,000+ attack attempts** across multiple honeypots. Additionally, **Elastic Fleet Agents** have collected **4.8+ million host monitoring events** from the T-Pot system, providing comprehensive visibility into both external attacks and internal system behavior through centralized Security Onion analysis.
 
 > **🔄 Project Evolution**: This research builds upon my [Allyship Security Lab VPN - Cloud-Local SIEM](https://github.com/yourusername/allyship-securitylab-VpNSIEM) infrastructure, demonstrating the evolution from basic SIEM setup to advanced threat intelligence collection with enhanced security controls.
 
@@ -47,10 +47,10 @@ This project represents the **next evolution** of my Allyship Security Labs infr
 
 | Metric | Value | Description |
 |--------|-------|-------------|
-| 🎯 **Total Attacks (2 Days)** | 113,000+ | Actual captured attacks |
-| 🎯 **Projected (7 Days)** | 400,000+ | Estimated total attacks |
-| 📊 **Host Events (2 Days)** | 4.8M+ | Elastic Fleet monitoring events |
-| 🌍 **Top Countries** | Romania, US, Netherlands | Leading attack sources |
+| 🎯 **Total Attacks (7 Days)** | 451,000+ | Final captured attacks across all sensors |
+| 🐝 **Per‑Honeypot Totals** | Cowrie 213k • Sentrypeer 225k • Tanner 3k • H0neytr4p 4k • Dionaea 2k • Redishhoneypot 1k | From Kibana dashboards |
+| 📊 **Host Events (7 Days)** | 4.8M+ | Elastic Fleet monitoring events |
+| 🌍 **Top Countries** | Romania, United States, The Netherlands, China, Hong Kong | Leading attack sources |
 | 🔐 **Zero-Trust** | ✅ | NetBird-managed access |
 | 📊 **Dual Monitoring** | ✅ | Attack + Host behavior analysis |
 | 🛡️ **Compliance** | ✅ | Azure & GDPR compliant |
@@ -58,7 +58,7 @@ This project represents the **next evolution** of my Allyship Security Labs infr
 </div>
 
 ### 🚀 Key Achievements
-- **🎯 Captured 113,000+ attack attempts in 2 days** using a securely isolated honeypot
+- **🎯 Captured 451,000+ attack attempts in 7 days** using a securely isolated honeypot
 - **📊 Collected 4.8+ million host monitoring events** through Elastic Fleet Agents for comprehensive system visibility
 - **🔐 Implemented zero-trust access model** with NetBird-managed WireGuard tunnels (replacing direct SSH access)
 - **🔄 Dual monitoring architecture** combining external attack capture (T-Pot) with internal host behavior analysis (Elastic Fleet)
@@ -73,30 +73,30 @@ The enhanced T-Pot deployment features a multi-layered security architecture tha
 
 ### 🔄 Architecture Flow
 1. **🌐 Attackers** → Target Azure VM (T-Pot honeypots)
-2. **🕸️ T-Pot** → Captures and logs all attack attempts (113,000+ in 2 days)
-3. **📊 Elastic Fleet Agents** → Monitor host behavior on T-Pot system (4.8M+ events in 2 days)
+2. **🕸️ T-Pot** → Captures and logs all attack attempts (451,000+ in 7 days)
+3. **📊 Elastic Fleet Agents** → Monitor host behavior on T-Pot system (4.8M+ events)
 4. **🔐 NetBird** → Secure WireGuard tunnels (100.66.x.x/16) for zero-trust data forwarding
 5. **🛡️ Security Onion** → Centralized SIEM processing both attack data and host monitoring events
 
 ### 🧩 Key Components
-- **🕸️ Honeypots**: Cowrie (56k attacks), Sentrypeer (55k attacks), Dionaea, Honeytrap
+- **🕸️ Honeypots**: Sentrypeer (~225k), Cowrie (~213k), H0neytr4p (~4k), Tanner (~3k), Dionaea (~2k), Redishhoneypot (~1k)
 - **📊 Elastic Fleet Agents**: Process monitoring (1.7M events), file monitoring (1.4M events), network monitoring (875k events)
 - **🔐 NetBird Security Layer**: Zero-trust access control and secure data forwarding
 - **🛡️ Security Onion**: Centralized SIEM for dual monitoring (attacks + host behavior)
 
-## 🔍 Key Findings (Based on 2-Day Data)
+## 🔍 Key Findings (Final 7‑Day Data)
 
 ### 1. 🎯 SIP Attacks Dominate (Port 5060)
 SIP attacks on port 5060 represented the **highest volume** with over **50,000 attacks** in a single day spike, indicating significant targeting of VoIP infrastructure.
 
 ### 2. 🌍 Romania Leads Attack Sources
-**Romania** emerged as the **top attack source** with over **50,000 attacks** in a single day, followed by the **United States**, **Netherlands**, **China**, and **Hong Kong**.
+**Romania** emerged as the **top attack source**, followed by the **United States**, **The Netherlands**, **China**, and **Hong Kong**.
 
 ### 3. 🔑 Honeypot Distribution
-**Cowrie (SSH)** and **Sentrypeer** captured the majority of attacks with **56,000** and **55,000** respectively, while other honeypots like **H0neytr4p**, **Tanner**, and **Dionaea** captured hundreds of attacks each.
+**Sentrypeer** and **Cowrie (SSH)** captured the majority of attacks with approximately **225,000** and **213,000** respectively, while other honeypots like **H0neytr4p (~4k)**, **Tanner (~3k)**, **Dionaea (~2k)**, and **Redishhoneypot (~1k)** recorded lower but notable volumes.
 
 ### 4. 🦠 Attack Volume Trends
-The deployment shows **massive attack spikes** with over **50,000 attacks** occurring in single-day bursts, demonstrating the high-volume nature of automated attacks.
+The deployment shows **massive attack spikes** with single‑day bursts exceeding **50,000 attacks**, demonstrating the high-volume nature of automated attacks.
 
 ### 5. 📊 Comprehensive Host Monitoring
 **Elastic Fleet Agents** collected **4.8+ million events** from the T-Pot host system, including:
@@ -106,6 +106,62 @@ The deployment shows **massive attack spikes** with over **50,000 attacks** occu
 - **1,021 session events** - User session and authentication tracking
 
 This dual monitoring approach provides **complete visibility** into both external attack attempts and internal system behavior, enabling comprehensive threat analysis through the centralized Security Onion SIEM.
+
+## 📸 Dashboards & Screenshots
+
+> The following images are directly exported from Kibana and the T‑Pot map UI. Redactions were applied where appropriate.
+
+<div align="center">
+
+![7‑Day Overview](assets/screenshots/Full%20Elastic%20T-Pot%20Dashboard%20after%207days.png)
+
+![This Week Overview](assets/screenshots/tpot%20this%20week%20view.png)
+
+![Last 2 Days](assets/screenshots/Tpot%20last%202days%20view.png)
+
+| Honeypot | Dashboard |
+|---|---|
+| Cowrie | ![Cowrie 213k](assets/screenshots/Cowrie-213k.png) |
+| Sentrypeer | ![Sentrypeer 225k](assets/screenshots/Sentrypeer-225k.png) |
+| Tanner | ![Tanner 3k](assets/screenshots/Tanner-3k.png) |
+| H0neytr4p | ![H0neytr4p 4k](assets/screenshots/H0neytr4p-4k.png) |
+| Dionaea | ![Dionaea 2k](assets/screenshots/Dionaea-2k.png) |
+| Redishhoneypot | ![Redishhoneypot 1k](assets/screenshots/Redishhoneypot-1k.png) |
+
+![Dynamic Attack Map](assets/screenshots/attackmap3.png)
+
+![Attack Paths](assets/screenshots/attackmap2b.png)
+
+![Cluster Map](assets/screenshots/attackmap4.png)
+
+![Inbound Live (redacted)](assets/screenshots/inbound%20live%20attack2-redacted.png)
+
+</div>
+
+## 📊 Final Metrics by Honeypot
+
+| Honeypot | Approx. Attacks | Top Ports/Protocols | Notes |
+|---|---:|---|---|
+| Sentrypeer | 225,000 | 5060/UDP (SIP) | Repeated large spikes |
+| Cowrie (SSH) | 213,000 | 22/TCP | Brute‑force usernames/passwords |
+| H0neytr4p | 4,000 | 80/443 | Web probes and scanners |
+| Tanner | 3,000 | 80/443 | Web application interactions |
+| Dionaea | 2,000 | Multiple | Malware/protocol emulation |
+| Redishhoneypot | 1,000 | 6379/TCP | Redis auth scans |
+
+> See `data/samples/anonymized-attack-data.json` for a sample dataset and `data/export-scripts/backup-azure.sh` for export automation.
+
+## 🔎 OSINT Enrichment (SpiderFoot)
+
+Cross‑referenced attacker infrastructure using SpiderFoot for attribution hints while maintaining ethical constraints.
+
+<div align="center">
+
+![SpiderFoot Summary](assets/screenshots/Asl%20SpiderFoot%20scan.png)
+
+![SpiderFoot Graph](assets/screenshots/Asl%20SpiderFoot%20scan2.png)
+
+</div>
 
 ## 🔒 Security Enhancements
 

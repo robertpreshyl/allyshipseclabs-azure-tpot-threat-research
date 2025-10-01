@@ -19,7 +19,7 @@
 
 ## 🚀 Project Overview
 
-This research project deployed a **T-Pot honeypot on Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents** to capture and analyze real-world cyber attacks while maintaining a **zero-trust architecture**. Over the final 7‑day run, the deployment captured **451,000+ attack attempts** across multiple honeypots. Additionally, **Elastic Fleet Agents** have collected **4.8+ million host monitoring events** from the T-Pot system, providing comprehensive visibility into both external attacks and internal system behavior through centralized Security Onion analysis.
+This research project deployed a **T-Pot honeypot on Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents** to capture and analyze real-world cyber attacks while maintaining a **zero-trust architecture**. Over the final 7‑day run, the deployment captured **451,000+ attack attempts** across multiple honeypots. Additionally, **Elastic Fleet Agents** collected **4.8+ million host monitoring events** from the T-Pot system, providing comprehensive visibility into both external attacks and internal system behavior through centralized Security Onion analysis.
 
 > **🔄 Project Evolution**: This research builds upon my [Allyship Security Lab VPN - Cloud-Local SIEM](https://github.com/yourusername/allyship-securitylab-VpNSIEM) infrastructure, demonstrating the evolution from basic SIEM setup to advanced threat intelligence collection with enhanced security controls.
 
@@ -168,7 +168,7 @@ Cross‑referenced attacker infrastructure using SpiderFoot for attribution hint
 ### 🔐 NetBird Access Control
 Replaced direct SSH access with NetBird-managed WireGuard tunnels, implementing granular access policies for different user roles. This approach maintained secure access even when away from the home network while providing complete audit trails.
 
-[![NetBird Dashboard](assets/screenshots/netbird-dashboard.png)](assets/screenshots/netbird-dashboard.png)
+<!-- NetBird dashboard screenshot omitted -->
 
 **Key Benefits:**
 - ✅ Zero-trust network access with proper authentication
@@ -179,7 +179,7 @@ Replaced direct SSH access with NetBird-managed WireGuard tunnels, implementing 
 ### 📊 Elastic Fleet Integration
 Deployed Elastic Fleet Agents to monitor host behavior and configured secure log forwarding to the local Security Onion instance. This integration collected **4.8+ million events** in just 2 days, providing comprehensive behavioral analysis of the T-Pot system beyond traditional attack log analysis.
 
-[![Elastic Fleet Dashboard](assets/screenshots/elastic-fleet.png)](assets/screenshots/elastic-fleet.png)
+<!-- Elastic Fleet dashboard screenshot omitted -->
 
 **Key Benefits:**
 - ✅ **4.8M+ events collected** in 2 days from T-Pot host monitoring

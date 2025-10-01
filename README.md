@@ -19,27 +19,28 @@
 
 ## 🚀 Project Overview
 
-This research project deployed a **T-Pot honeypot on Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents** to capture and analyze real-world cyber attacks while maintaining a **zero-trust architecture**. Over the final 7‑day run, the deployment captured **451,000+ attack attempts** across multiple honeypots. Additionally, **Elastic Fleet Agents** collected **4.8+ million host monitoring events** from the T-Pot system, providing comprehensive visibility into both external attacks and internal system behavior through centralized Security Onion analysis.
+This research project deployed a **T‑Pot honeypot on Microsoft Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents (ingested into a locally deployed Security Onion)** to capture and analyze real‑world cyber attacks while maintaining a **zero‑trust architecture**. Over the final 7‑day window, the deployment captured **451,000+ attack attempts** across multiple honeypots. In parallel, Security Onion recorded **18,300,651+ host telemetry events (Sep 4–13)** from the T‑Pot system and endpoints over the NetBird WireGuard network, providing comprehensive visibility into both external attacks and internal system behavior. NetBird’s 100.66.0.0/16 overlay also enabled secure, on‑the‑go access (including mobile) to dashboards and detections while away from home.
 
 > **🔄 Project Evolution**: This research builds upon my [Allyship Security Lab VPN - Cloud-Local SIEM](https://github.com/yourusername/allyship-securitylab-VpNSIEM) infrastructure, demonstrating the evolution from basic SIEM setup to advanced threat intelligence collection with enhanced security controls.
 
 ### 🎯 Key Technologies
 - **T-Pot** - The All-In-One Multi Honeypot Platform
-- **Azure VM** - Cloud infrastructure hosting
+- **Azure VM + Azure Blob Storage** - Cloud infrastructure hosting and durable data retention
 - **Security Onion** - Local SIEM for centralized analysis
 - **Elastic Stack** - Kibana dashboard, Elasticsearch OSQuery for data storage and Host Queries
-- **Let's Encrypt** - SSL/TLS certificate management
-- **NetBird** - Zero-trust network access- Installed accross endpoints for NAT Passthrough, Secured Local/Cloud connections
+- **Let's Encrypt** - SSL/TLS certificate management (Although Netbird Already provides wireguard secured tunnel)
+- **NetBird** - Zero-trust network access- Installed accross all endpoints endpoints for NAT Passthrough, Secured Local/Cloud connections, Access control to determine which endpoints have access when at home or away from home. (This is particular useful to be able to quickly view Security Onions Dashboards and Detections through Netbird 100.x.x.x/16)
 - **Elastic Fleet Agents** - Behavioral monitoring and log forwarding from all Local/Cloud endpoints to SIEM.
+- **OsQuery** - Query endpoints
 
 ## 🏗️ Architecture Evolution
 
 This project represents the **next evolution** of my Allyship Security Labs infrastructure. While my previous project established secure network connectivity between environments using NetBird and Security Onion, this honeypot deployment demonstrates how to securely expose internet-facing services while maintaining complete visibility and control.
 
 ### 🔧 Enhanced Architecture Components
-- **🔐 NetBird Zero-Trust Access**: Replaced direct SSH access with NetBird-managed WireGuard tunnels
-- **📊 Elastic Fleet Integration**: Deployed agents to monitor host behavior and securely forward logs to local Security Onion
-- **🎯 Comprehensive Threat Intelligence**: Captured and analyzed real-world attack patterns with behavioral context
+- **🔐 NetBird Zero-Trust Access**: Replaced direct SSH access with NetBird-managed WireGuard tunnels (connect/Access endpoints only with Netbird's IPs)
+- **📊 Elastic Fleet Integration**: Deployed agents to monitor host behavior and securely forward logs to local Security Onion (Again using Netbird's wireguard IPs , this ensures all data in-transit is encrypted and secured between endpoints)
+- **🎯 Comprehensive Threat Intelligence**: Captured and analyzed real-world attack patterns with behavioral context from T-port internet facing live attacks capture.
 
 ## 🎯 Project Highlights
 
@@ -49,7 +50,7 @@ This project represents the **next evolution** of my Allyship Security Labs infr
 |--------|-------|-------------|
 | 🎯 **Total Attacks (7 Days)** | 451,000+ | Final captured attacks across all sensors |
 | 🐝 **Per‑Honeypot Totals** | Cowrie 213k • Sentrypeer 225k • Tanner 3k • H0neytr4p 4k • Dionaea 2k • Redishhoneypot 1k | From Kibana dashboards |
-| 📊 **Host Events (7 Days)** | 4.8M+ | Elastic Fleet monitoring events |
+| 📊 **Host Events (Sep 4–13)** | 18.3M+ | Security Onion (Elastic Fleet + Osquery) |
 | 🌍 **Top Countries** | Romania, United States, The Netherlands, China, Hong Kong | Leading attack sources |
 | 🔐 **Zero-Trust** | ✅ | NetBird-managed access |
 | 📊 **Dual Monitoring** | ✅ | Attack + Host behavior analysis |
@@ -59,7 +60,7 @@ This project represents the **next evolution** of my Allyship Security Labs infr
 
 ### 🚀 Key Achievements
 - **🎯 Captured 451,000+ attack attempts in 7 days** using a securely isolated honeypot
-- **📊 Collected 4.8+ million host monitoring events** through Elastic Fleet Agents for comprehensive system visibility
+- **📊 Collected 18.3+ million host/endpoint events** via Elastic Fleet + Osquery into Security Onion
 - **🔐 Implemented zero-trust access model** with NetBird-managed WireGuard tunnels (replacing direct SSH access)
 - **🔄 Dual monitoring architecture** combining external attack capture (T-Pot) with internal host behavior analysis (Elastic Fleet)
 - **🔍 Analyzed attack patterns** including SIP attacks (port 5060), SSH brute-forcing (port 22), and web attacks (ports 80/443)
@@ -74,7 +75,7 @@ The enhanced T-Pot deployment features a multi-layered security architecture tha
 ### 🔄 Architecture Flow
 1. **🌐 Attackers** → Target Azure VM (T-Pot honeypots)
 2. **🕸️ T-Pot** → Captures and logs all attack attempts (451,000+ in 7 days)
-3. **📊 Elastic Fleet Agents** → Monitor host behavior on T-Pot system (4.8M+ events)
+3. **📊 Elastic Fleet Agents** → Monitor host/endpoint behavior (18.3M+ events observed Sep 4–13)
 4. **🔐 NetBird** → Secure WireGuard tunnels (100.66.x.x/16) for zero-trust data forwarding
 5. **🛡️ Security Onion** → Centralized SIEM processing both attack data and host monitoring events
 
@@ -162,6 +163,34 @@ Cross‑referenced attacker infrastructure using SpiderFoot for attribution hint
 ![SpiderFoot Graph](assets/screenshots/Asl%20SpiderFoot%20scan2.png)
 
 </div>
+
+## 🔭 Security Onion Monitoring (Sep 4–13)
+
+Security Onion continuously monitored the T‑Pot host and related endpoints over the NetBird WireGuard overlay (`100.66.0.0/16`). This provided encrypted, policy‑controlled access to telemetry and detections from anywhere, including mobile.
+
+Key observations from the dashboards (time window 2025‑09‑04 00:00:58 – 2025‑09‑13 12:00:58):
+
+- Total events: **18,300,651**
+- By event.category: **network 13,262,680**, **file 1,305,702**, **process 499,066**, **session 3,028**, **authentication 12**
+- By event.module: **network_traffic 13,247,863**, **system 2,805,242**, **endpoint 1,819,512**, **elastic_agent 131,904**, **osquery_manager 571**
+
+<div align="center">
+
+![SO Host Dashboard](assets/screenshots/securityOnions/SecOnion%20tpot%20host%20dashboard%2018mt%20events.png)
+
+![SO 18M+ in 9 days](assets/screenshots/securityOnions/SecOnion%20tpot%2018M+%20events%20for%209days.png)
+
+![SO Hunt Dashboard](assets/screenshots/securityOnions/SecOnion-Hunt%20Dashboard-(days%20tpot%20hunt).png)
+
+![Heralding Ports](assets/screenshots/securityOnions/seconion%20tpot%20heralding%20ports.png)
+
+![SO Query Context](assets/screenshots/securityOnions/Screenshot%202025-10-01%20at%202.32.57%E2%80%AFPM.png)
+
+</div>
+
+### 🗄️ Data Storage & Retention
+
+All research artifacts (exports, dashboards, and anonymized samples) were saved to **Azure Blob Storage** for durable retention and offline analysis of attack trends and activity spikes. Screenshots and datasets were redacted/anonymized where necessary to protect privacy while preserving research value.
 
 ## 🔒 Security Enhancements
 

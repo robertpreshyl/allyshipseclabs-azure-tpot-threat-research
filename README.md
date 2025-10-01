@@ -176,15 +176,15 @@ Key observations from the dashboards (time window 2025‑09‑04 00:00:58 – 20
 
 <div align="center">
 
-![SO Host Dashboard](assets/screenshots/securityOnions/SecOnion%20tpot%20host%20dashboard%2018mt%20events.png)
+![SO Host Dashboard](<assets/screenshots/securityOnions/SecOnion tpot host dashboard 18mt events.png>)
 
-![SO 18M+ in 9 days](assets/screenshots/securityOnions/SecOnion%20tpot%2018M+%20events%20for%209days.png)
+![SO 18M+ in 9 days](<assets/screenshots/securityOnions/SecOnion tpot 18M+ events for 9days.png>)
 
-![SO Hunt Dashboard](assets/screenshots/securityOnions/SecOnion-Hunt%20Dashboard-(days%20tpot%20hunt).png)
+![SO Hunt Dashboard](<assets/screenshots/securityOnions/SecOnion-Hunt Dashboard-(days tpot hunt).png>)
 
-![Heralding Ports](assets/screenshots/securityOnions/seconion%20tpot%20heralding%20ports.png)
+![Heralding Ports](<assets/screenshots/securityOnions/seconion tpot heralding ports.png>)
 
-![SO Query Context](assets/screenshots/securityOnions/Screenshot%202025-10-01%20at%202.32.57%E2%80%AFPM.png)
+![SO Query Context](<assets/screenshots/securityOnions/Screenshot 2025-10-01 at 2.32.57 PM.png>)
 
 </div>
 

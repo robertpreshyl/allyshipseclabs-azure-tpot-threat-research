@@ -18,7 +18,7 @@ nano ~/.ssh/authorized_keys
 correect permission 
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
-                                                                                                                      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICC057H+5jeeKmTSMRZjqluI6opFn4UZr0c7DnLmtSsq robertpreshyl@gmail.com               
+<YOUR_PUBLIC_SSH_KEY_HERE>
                                                                                                                                      
 
 ### Please review for possible honeypot port conflicts.

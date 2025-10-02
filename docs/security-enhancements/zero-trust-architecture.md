@@ -191,17 +191,17 @@ policies:
 # NetBird network setup
 netbird network create \
   --name "honeypot-management" \
-  --cidr "10.0.1.0/24" \
+  --cidr "<MANAGEMENT_NETWORK_CIDR>" \
   --description "Zero-trust management network"
 
 netbird network create \
   --name "honeypot-logging" \
-  --cidr "10.0.2.0/24" \
+  --cidr "<LOGGING_NETWORK_CIDR>" \
   --description "Secure logging network"
 
 netbird network create \
   --name "honeypot-internal" \
-  --cidr "10.0.3.0/24" \
+  --cidr "<INTERNAL_NETWORK_CIDR>" \
   --description "Internal service network"
 ```
 
@@ -249,14 +249,14 @@ sudo ufw default deny incoming
 sudo ufw default deny outgoing
 
 # Allow NetBird management network
-sudo ufw allow from 10.0.1.0/24 to any port 64295
-sudo ufw allow from 10.0.1.0/24 to any port 64297
+sudo ufw allow from <MANAGEMENT_NETWORK_CIDR> to any port 64295
+sudo ufw allow from <MANAGEMENT_NETWORK_CIDR> to any port 64297
 
 # Allow log forwarding network
-sudo ufw allow from 10.0.2.0/24 to any port 9200
+sudo ufw allow from <LOGGING_NETWORK_CIDR> to any port 9200
 
 # Allow internal service communication
-sudo ufw allow from 10.0.3.0/24
+sudo ufw allow from <INTERNAL_NETWORK_CIDR>
 
 # Allow DNS resolution
 sudo ufw allow out 53/udp
@@ -297,14 +297,14 @@ sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 sudo iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # NetBird management network
-sudo iptables -A INPUT -s 10.0.1.0/24 -p tcp --dport 64295 -j ACCEPT
-sudo iptables -A INPUT -s 10.0.1.0/24 -p tcp --dport 64297 -j ACCEPT
+sudo iptables -A INPUT -s <MANAGEMENT_NETWORK_CIDR> -p tcp --dport 64295 -j ACCEPT
+sudo iptables -A INPUT -s <MANAGEMENT_NETWORK_CIDR> -p tcp --dport 64297 -j ACCEPT
 
 # Log forwarding network
-sudo iptables -A INPUT -s 10.0.2.0/24 -p tcp --dport 9200 -j ACCEPT
+sudo iptables -A INPUT -s <LOGGING_NETWORK_CIDR> -p tcp --dport 9200 -j ACCEPT
 
 # Internal service network
-sudo iptables -A INPUT -s 10.0.3.0/24 -j ACCEPT
+sudo iptables -A INPUT -s <INTERNAL_NETWORK_CIDR> -j ACCEPT
 
 # DNS resolution
 sudo iptables -A OUTPUT -p udp --dport 53 -j ACCEPT

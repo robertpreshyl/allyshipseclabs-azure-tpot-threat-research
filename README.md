@@ -19,9 +19,34 @@
 
 ## 🚀 Project Overview
 
-This research project deployed a **T‑Pot honeypot on Microsoft Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents (ingested into a locally deployed Security Onion)** to capture and analyze real‑world cyber attacks while maintaining a **zero‑trust architecture**. Over the final 7‑day window, the deployment captured **451,000+ attack attempts** across multiple honeypots. In parallel, Security Onion recorded **18,300,651+ host telemetry events (Sep 4–13)** from the T‑Pot system and endpoints over the NetBird WireGuard network, providing comprehensive visibility into both external attacks and internal system behavior. NetBird’s 100.66.0.0/16 overlay also enabled secure, on‑the‑go access (including mobile) to dashboards and detections while away from home.
+This research project deployed a **T‑Pot honeypot on Microsoft Azure** with enhanced security controls via **NetBird** and **Elastic Fleet Agents (ingested into a locally deployed Security Onion)** to capture and analyze real‑world cyber attacks while maintaining a **zero‑trust architecture**. Over the final 7‑day window, the deployment captured **451,000+ attack attempts** across multiple honeypots. In parallel, Security Onion recorded **18,300,651+ host telemetry events (Sep 4–13)** from the T‑Pot system and endpoints over the NetBird WireGuard network, providing comprehensive visibility into both external attacks and internal system behavior. NetBird's overlay network enabled secure, on‑the‑go access (including mobile) to dashboards and detections while away from home.
 
-> **🔄 Project Evolution**: This research builds upon my [Allyship Security Lab VPN - Cloud-Local SIEM](https://github.com/yourusername/allyship-securitylab-VpNSIEM) infrastructure, demonstrating the evolution from basic SIEM setup to advanced threat intelligence collection with enhanced security controls.
+> **🔄 Project Evolution**: This research builds upon the [Allyship Security Lab VPN - Cloud-Local SIEM](https://github.com/yourusername/allyship-securitylab-VpNSIEM) infrastructure, demonstrating the evolution from basic SIEM setup to advanced threat intelligence collection with enhanced security controls.
+
+## 📚 Documentation
+
+**📖 [Complete Documentation Index](docs/README.md)** - Comprehensive documentation portal
+
+### Quick Access
+- **🚀 [Setup Guide](docs/setup-guide.md)** - Complete deployment instructions
+- **⚡ [Quick Start](docs/quick-start.md)** - Rapid deployment for experienced users  
+- **🔧 [Troubleshooting](docs/troubleshooting.md)** - Common issues and solutions
+- **🏗️ [Architecture Overview](docs/context.md)** - Technical architecture and design decisions
+
+### Configuration Guides
+- **🖥️ [Azure VM Setup](docs/azure-configuration/vm-configuration.md)** - VM provisioning and configuration
+- **🔒 [Network Security](docs/azure-configuration/nsg-rules.md)** - NSG rules and firewall configuration
+- **🔐 [SSL Configuration](docs/azure-configuration/ssl-configuration.md)** - Let's Encrypt certificate setup
+
+### Security & Monitoring
+- **🛡️ [Zero-Trust Architecture](docs/security-enhancements/zero-trust-architecture.md)** - Advanced security implementation
+- **🔗 [NetBird Integration](docs/security-enhancements/netbird-integration.md)** - Secure network access
+- **📊 [Elastic Fleet Setup](docs/security-enhancements/elastic-fleet-setup.md)** - Comprehensive monitoring
+
+### Research Findings
+- **📈 [Attack Analysis](docs/research-findings/attack-analysis.md)** - Detailed attack pattern analysis
+- **🎯 [Threat Intelligence](docs/research-findings/threat-intelligence.md)** - Threat actor insights
+- **🌍 [Top Attackers](docs/research-findings/top-attackers.md)** - Geographic attack distribution
 
 ### 🎯 Key Technologies
 - **T-Pot** - The All-In-One Multi Honeypot Platform
@@ -166,7 +191,7 @@ Cross‑referenced attacker infrastructure using SpiderFoot for attribution hint
 
 ## 🔭 Security Onion Monitoring (Sep 4–13)
 
-Security Onion continuously monitored the T‑Pot host and related endpoints over the NetBird WireGuard overlay (`100.66.0.0/16`). This provided encrypted, policy‑controlled access to telemetry and detections from anywhere, including mobile.
+Security Onion continuously monitored the T‑Pot host and related endpoints over the NetBird WireGuard overlay (`<NETBIRD_OVERLAY_NETWORK>`). This provided encrypted, policy‑controlled access to telemetry and detections from anywhere, including mobile.
 
 Key observations from the dashboards (time window 2025‑09‑04 00:00:58 – 2025‑09‑13 12:00:58):
 

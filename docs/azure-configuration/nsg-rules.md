@@ -1,82 +1,36 @@
-# Network Security Group (NSG) Configuration
+# Network Security Group (NSG) Configuration for T-Pot on Azure
 
-This document details the Network Security Group configuration for the T-Pot honeypot deployment, implementing a defense-in-depth approach with proper network segmentation.
+This page focuses specifically on T-Pot exposure on Azure. NetBird is self-hosted on AWS in this project, so do not add NetBird ports to the Azure NSG.
 
-## NSG Design Principles
+## Principles
+- Expose only the ports required by your selected T-Pot profile/version
+- Keep management/admin access off the public internet (use NetBird overlay)
+- Default deny all other inbound
+- Validate against T-Pot’s official documentation for your release
 
-### Security Zones
+Authoritative reference for services/ports: `https://github.com/dtag-dev-sec/tpotce`
 
-The NSG configuration implements three distinct security zones:
+## Common inbound rules (examples)
+Confirm against your chosen profile:
+- 80/tcp, 443/tcp: Web UI and HTTP(S)-based honeypots
+- 22/tcp or 23/tcp: SSH or Telnet honeypots (e.g., Cowrie/Heralding)
+- 5060/udp: SIP honeypot (e.g., SentryPeer)
+- 3306/tcp: MySQL honeypots (e.g., Dionaea)
+- 6379/tcp: Redis honeypot (Redishoneypot)
+- Additional ports per ICS/qHoneypots profiles (e.g., 502, 102, 2404, 47808)
 
-1. **Management Zone**: Restricted access via NetBird IP ranges
-2. **Honeypot Zone**: Open access to attract attackers
-3. **Internal Zone**: Restricted internal communication
+Avoid exposing real administrative services (SSH to the host). Manage via NetBird.
 
-### Rule Priority Structure
+## Outbound
+- Allow OS/package updates
+- Allow telemetry to Security Onion/Elastic (prefer via NetBird overlay)
+- Block unnecessary egress
 
-| Priority Range | Purpose | Description |
-|----------------|---------|-------------|
-| 100-199 | Management Access | NetBird and administrative access |
-| 200-299 | Honeypot Services | Public-facing honeypot ports |
-| 300-399 | Internal Services | Inter-service communication |
-| 400-499 | Monitoring | Logging and monitoring access |
-| 1000+ | Deny Rules | Default deny policies |
+## Associate NSG
+- Attach the NSG to the NIC or subnet of the T-Pot VM
 
-## Management Zone Rules
+## My example categories (from a prior run)
+- Open to Any: 80, 443, 23, 53/udp, 3389, 3306, 1433, 1521, 6379, 5060/udp, 42/135/1723, 8080/8443, ICS ports (502/102/2404/47808)
+- Deny all else by default
 
-### NetBird SSH Access (Priority 100)
-
-```bash
-# Allow SSH access via NetBird
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-netbird-ssh \
-  --priority 100 \
-  --source-address-prefixes <NETBIRD_IP_RANGE> \
-  --destination-port-ranges 64295 \
-  --access Allow \
-  --protocol Tcp \
-  --description "SSH access via NetBird management network"
-```
-
-### NetBird Web Interface (Priority 101)
-
-```bash
-# Allow web interface access via NetBird
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-netbird-web \
-  --priority 101 \
-  --source-address-prefixes <NETBIRD_IP_RANGE> \
-  --destination-port-ranges 64297 \
-  --access Allow \
-  --protocol Tcp \
-  --description "Kibana web interface via NetBird"
-```
-
-### NetBird Log Forwarding (Priority 102)
-
-```bash
-# Allow log forwarding to Security Onion
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-log-forwarding \
-  --priority 102 \
-  --source-address-prefixes <NETBIRD_IP_RANGE> \
-  --destination-port-ranges 9200 \
-  --access Allow \
-  --protocol Tcp \
-  --description "Elasticsearch log forwarding to Security Onion"
-```
-
-## Honeypot Zone Rules
-
-### SSH Honeypot (Priority 200)
-
-```bash
-# Allow SSH attacks from anywhere
-az network ns
-```
+Always verify ports against the specific T-Pot release/profile you deploy: `https://github.com/dtag-dev-sec/tpotce`

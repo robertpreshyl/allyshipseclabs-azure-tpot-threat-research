@@ -21,116 +21,15 @@ This guide provides step-by-step instructions for deploying a T-Pot honeypot on 
 
 ## Azure VM Setup
 
-### 1. Create Virtual Machine
-
-```bash
-# Create resource group
-az group create --name tpot-research-rg --location eastus
-
-# Create virtual machine
-az vm create \
-  --resource-group tpot-research-rg \
-  --name tpot-honeypot \
-  --image Ubuntu2204 \
-  --size Standard_D2s_v3 \
-  --admin-username azureuser \
-  --generate-ssh-keys \
-  --public-ip-sku Standard
-```
-
-### 2. Configure VM Settings
-
-```bash
-# Enable boot diagnostics
-az vm boot-diagnostics enable \
-  --resource-group tpot-research-rg \
-  --name tpot-honeypot
-
-# Set up managed identity
-az vm identity assign \
-  --resource-group tpot-research-rg \
-  --name tpot-honeypot
-```
-
+Use the selection checklist and Azure quickstart to provision the VM:
+- VM selection and notes: [VM Configuration](azure-configuration/vm-configuration.md)
+- Azure Portal quickstart (Ubuntu): `https://learn.microsoft.com/azure/virtual-machines/linux/quick-create-portal`
 [![VM Configuration](assets/screenshots/vm-configuration.png)](assets/screenshots/vm-configuration.png)
 
 ## Network Security Group Configuration
 
-### 1. Create NSG Rules for Management
-
-```bash
-# Create NSG
-az network nsg create \
-  --resource-group tpot-research-rg \
-  --name tpot-nsg
-
-# Allow NetBird management ports (restricted to NetBird IP)
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-netbird-ssh \
-  --priority 100 \
-  --source-address-prefixes <NETBIRD_IP_RANGE> \
-  --destination-port-ranges 64295 \
-  --access Allow \
-  --protocol Tcp
-
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-netbird-web \
-  --priority 101 \
-  --source-address-prefixes <NETBIRD_IP_RANGE> \
-  --destination-port-ranges 64297 \
-  --access Allow \
-  --protocol Tcp
-```
-
-### 2. Create NSG Rules for Honeypot Services
-
-```bash
-# Allow honeypot ports from anywhere
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-ssh-honeypot \
-  --priority 200 \
-  --source-address-prefixes Internet \
-  --destination-port-ranges 22 \
-  --access Allow \
-  --protocol Tcp
-
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-http-honeypot \
-  --priority 201 \
-  --source-address-prefixes Internet \
-  --destination-port-ranges 80 \
-  --access Allow \
-  --protocol Tcp
-
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-https-honeypot \
-  --priority 202 \
-  --source-address-prefixes Internet \
-  --destination-port-ranges 443 \
-  --access Allow \
-  --protocol Tcp
-
-# Additional honeypot ports
-az network nsg rule create \
-  --resource-group tpot-research-rg \
-  --nsg-name tpot-nsg \
-  --name allow-honeypot-ports \
-  --priority 203 \
-  --source-address-prefixes Internet \
-  --destination-port-ranges 21,23,25,53,110,143,993,995,1723,3306,3389,5432,5900,8080 \
-  --access Allow \
-  --protocol Tcp
-```
+Follow best practices and examples here:
+- NSG guidance for T-Pot: [NSG Rules](azure-configuration/nsg-rules.md)
 
 [![NSG Configuration](assets/screenshots/nsg-config.png)](assets/screenshots/nsg-config.png)
 
@@ -213,67 +112,13 @@ sudo docker-compose ps
 
 ## NetBird Integration
 
-### 1. Install NetBird Client
-
-```bash
-# Download and install NetBird
-curl -fsSL https://pkgs.netbird.io/debian/install.sh | sudo bash
-
-# Start NetBird service
-sudo systemctl start netbird
-sudo systemctl enable netbird
-```
-
-### 2. Configure NetBird Access
-
-```bash
-# Join NetBird network (use your setup key)
-sudo netbird up --setup-key <YOUR_SETUP_KEY>
-
-# Verify connection
-sudo netbird status
-```
-
-### 3. Configure Access Policies
-
-Access the NetBird management interface and configure policies:
-
-- **Honeypot Management**: Allow SSH access on port 64295
-- **Web Interface**: Allow HTTPS access on port 64297
-- **Log Forwarding**: Allow communication with Security Onion
-
-[![NetBird Configuration](assets/screenshots/netbird-config.png)](assets/screenshots/netbird-config.png)
+Use the official guide (self-hosted) and environment notes here:
+- Reference: [NetBird Integration](security-enhancements/netbird-integration.md)
 
 ## SSL Configuration with Let's Encrypt
 
-### 1. Install Certbot
-
-```bash
-# Install Certbot
-sudo apt install -y certbot
-
-# Install Nginx plugin
-sudo apt install -y python3-certbot-nginx
-```
-
-### 2. Configure Domain and SSL
-
-```bash
-# Obtain SSL certificate
-sudo certbot --nginx -d your-honeypot-domain.com
-
-# Test certificate renewal
-sudo certbot renew --dry-run
-```
-
-[![SSL Configuration](assets/screenshots/ssl-config.png)](assets/screenshots/ssl-config.png)
-
-### 3. Configure Automatic Renewal
-
-```bash
-# Add to crontab
-echo "0 12 * * * /usr/bin/certbot renew --quiet" | sudo crontab -
-```
+Follow the dedicated guide:
+- [SSL Configuration](azure-configuration/ssl-configuration.md)
 
 ## Elastic Fleet Agent Deployment
 

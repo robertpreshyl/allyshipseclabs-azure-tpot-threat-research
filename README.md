@@ -239,10 +239,10 @@ To replicate this research setup:
 
 | Step | Description | Documentation |
 |------|-------------|---------------|
-| 1️⃣ | Set up NetBird infrastructure | [NetBird Integration](docs/security-enhancements/netbird-integration.md) |
+| 1️⃣ | Set up NetBird infrastructure | Official: `https://docs.netbird.io/selfhosted/selfhosted-guide` • Notes: [NetBird Integration](docs/security-enhancements/netbird-integration.md) |
 | 2️⃣ | Create Azure VM | [VM Configuration](docs/azure-configuration/vm-configuration.md) |
 | 3️⃣ | Configure NSG Rules | [NSG Rules](docs/azure-configuration/nsg-rules.md) |
-| 4️⃣ | Install T-Pot | [Setup Guide](docs/setup-guide.md) |
+| 4️⃣ | Install T-Pot | Official: `https://github.com/dtag-dev-sec/tpotce` • Notes: [Setup Guide](docs/setup-guide.md) |
 | 5️⃣ | Secure with Let's Encrypt | [SSL Configuration](docs/azure-configuration/ssl-configuration.md) |
 | 6️⃣ | Integrate with Elastic Fleet | [Elastic Fleet Setup](docs/security-enhancements/elastic-fleet-setup.md) |
 

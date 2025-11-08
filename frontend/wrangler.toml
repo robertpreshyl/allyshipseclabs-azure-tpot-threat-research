@@ -1,0 +1,18 @@
+# Cloudflare Pages configuration
+name = "allyship-security-labs"
+compatibility_date = "2023-05-18"
+
+[build]
+command = "npm run build"
+cwd = "."
+watch_dir = "src"
+
+[build.upload]
+format = "modules"
+dir = "dist"
+main = "./dist/index.html"
+
+
+
+
+

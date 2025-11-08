@@ -1,0 +1,29 @@
+# Secrets and environment files
+.env
+*.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.p12
+*.cer
+*.crt
+*.der
+
+# Key/secret dumps and exports
+secret-*.txt
+keys/**
+exports/**
+
+# OS/Editor
+.DS_Store
+.idea/
+.vscode/
+
+# Node/Python caches
+node_modules/
+__pycache__/
+.dist/
+
+# Images with potential sensitive overlays (keep originals outside repo)
+assets/screenshots/**/redacted-originals/

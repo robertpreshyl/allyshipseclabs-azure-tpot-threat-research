@@ -1,0 +1,192 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+    name: Lint and Format Check
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install markdownlint
+      run: npm install -g markdownlint-cli
+      
+    - name: Lint Markdown files
+      run: markdownlint docs/**/*.md README.md
+      
+    - name: Check for broken links
+      run: |
+        npm install -g markdown-link-check
+        find docs -name "*.md" -exec markdown-link-check {} \;
+        
+    - name: Validate JSON files
+      run: |
+        find . -name "*.json" -not -path "./.git/*" -exec python3 -m json.tool {} \; > /dev/null
+
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Security Scan
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  documentation-check:
+    runs-on: ubuntu-latest
+    name: Documentation Check
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Check documentation structure
+      run: |
+        # Check if all required documentation files exist
+        test -f README.md || (echo "README.md missing" && exit 1)
+        test -f docs/context.md || (echo "docs/context.md missing" && exit 1)
+        test -f docs/setup-guide.md || (echo "docs/setup-guide.md missing" && exit 1)
+        test -f docs/security-enhancements/netbird-integration.md || (echo "NetBird integration docs missing" && exit 1)
+        test -f docs/security-enhancements/elastic-fleet-setup.md || (echo "Elastic Fleet setup docs missing" && exit 1)
+        test -f docs/research-findings/attack-analysis.md || (echo "Attack analysis docs missing" && exit 1)
+        test -f docs/compliance/azure-terms.md || (echo "Azure terms compliance docs missing" && exit 1)
+        test -f docs/compliance/gdpr-considerations.md || (echo "GDPR considerations docs missing" && exit 1)
+        
+    - name: Check for placeholder content
+      run: |
+        # Check for placeholder comments that should be replaced
+        if grep -r "PLACEHOLDER:" docs/; then
+          echo "Warning: Placeholder content found in documentation"
+        fi
+        
+    - name: Validate data samples
+      run: |
+        # Validate JSON data samples
+        python3 -m json.tool data/samples/anonymized-attack-data.json > /dev/null
+        
+    - name: Check script permissions
+      run: |
+        # Check if backup script is executable
+        test -x data/export-scripts/backup-azure.sh || (echo "Backup script not executable" && exit 1)
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    name: Build and Test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt || echo "No requirements.txt found"
+        
+    - name: Run tests
+      run: |
+        # Run any available tests
+        if [ -f "tests/test_*.py" ]; then
+          python -m pytest tests/
+        else
+          echo "No tests found"
+        fi
+        
+    - name: Check script syntax
+      run: |
+        # Check bash script syntax
+        bash -n data/export-scripts/backup-azure.sh
+
+  compliance-check:
+    runs-on: ubuntu-latest
+    name: Compliance Check
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Check for sensitive information
+      run: |
+        # Check for potential sensitive information
+        if grep -r -i "password\|secret\|key\|token" --exclude-dir=.git --exclude="*.md" .; then
+          echo "Warning: Potential sensitive information found"
+        fi
+        
+    - name: Check for proper anonymization
+      run: |
+        # Check that IP addresses are anonymized in data samples
+        if grep -E "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" data/samples/anonymized-attack-data.json; then
+          echo "Warning: Real IP addresses found in anonymized data"
+        fi
+        
+    - name: Validate compliance documentation
+      run: |
+        # Check that compliance docs mention key requirements
+        grep -q "Azure Terms of Service" docs/compliance/azure-terms.md || (echo "Azure terms not mentioned" && exit 1)
+        grep -q "GDPR" docs/compliance/gdpr-considerations.md || (echo "GDPR not mentioned" && exit 1)
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    name: Deploy Documentation
+    needs: [lint-and-format, security-scan, documentation-check, build-and-test, compliance-check]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install -g @vuepress/cli
+        npm install -g vuepress
+        
+    - name: Build documentation
+      run: |
+        # Build documentation site if vuepress config exists
+        if [ -f "docs/.vuepress/config.js" ]; then
+          vuepress build docs
+        else
+          echo "No VuePress config found, skipping documentation build"
+        fi
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/.vuepress/dist
+        cname: your-domain.com  # Replace with actual domain if using custom domain
+

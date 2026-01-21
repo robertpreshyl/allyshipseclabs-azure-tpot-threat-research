@@ -215,7 +215,7 @@ Key observations from the dashboards (time window 2025‑09‑04 00:00:58 – 20
 
 ### 🗄️ Data Storage & Retention
 
-All research artifacts (exports, dashboards, and anonymized samples) were saved to **Azure Blob Storage** for durable retention and offline analysis of attack trends and activity spikes. Screenshots and datasets were redacted/anonymized where necessary to protect privacy while preserving research value.
+Attack logs were stored in Azure Blob Storage during the 7-day research period and securely deleted (VM + storage destroyed) within 30 days per GDPR data minimization policy. Screenshots and anonymized samples (`data/samples/anonymized-attack-data.json`) preserved for verification while protecting Azure infrastructure identifiers.
 
 ## 🔒 Security Enhancements
 

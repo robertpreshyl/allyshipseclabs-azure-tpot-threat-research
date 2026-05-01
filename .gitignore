@@ -27,3 +27,5 @@ __pycache__/
 
 # Images with potential sensitive overlays (keep originals outside repo)
 assets/screenshots/**/redacted-originals/
+*.sql
+*.dump
